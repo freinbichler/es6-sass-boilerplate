@@ -21,7 +21,7 @@ gulp.task('styles', () => {
     'src/sass/*.scss'
   ])
     .pipe($.changed('.tmp/styles', {extension: '.css'}))
-    .pipe($.if(!argv.production,$.sourcemaps.init()))
+    .pipe($.if(!argv.production, $.sourcemaps.init()))
     .pipe($.sass({
       precision: 10
     }).on('error', $.sass.logError))
@@ -29,7 +29,7 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles if production mode (via gulp styles --production)
     .pipe($.if('*.css' && argv.production, $.minifyCss()))
-    .pipe($.if(!argv.production,$.sourcemaps.write()))
+    .pipe($.if(!argv.production, $.sourcemaps.write()))
     .pipe(gulp.dest('public/css'))
     .pipe(browserSync.stream())
     .pipe($.size({title: 'styles'}));
@@ -41,16 +41,14 @@ gulp.task('scripts', () => {
     entries: 'src/js/app.js',
     debug: true
   })
-    .transform(babelify.configure({
-      modules: 'common'
-    }))
+    .transform('babelify', {presets: ['es2015']})
     .bundle()
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe($.if(!argv.production,$.sourcemaps.init({loadMaps: true})))
-    .pipe($.if(argv.production,$.uglify()))
+    .pipe($.if(!argv.production, $.sourcemaps.init({loadMaps: true})))
+    .pipe($.if(argv.production, $.uglify()))
       .on('error', $.util.log)
-    .pipe($.if(!argv.production,$.sourcemaps.write()))
+    .pipe($.if(!argv.production, $.sourcemaps.write()))
     .pipe(gulp.dest('./public/js'));
 });
 
