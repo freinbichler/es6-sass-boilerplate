@@ -1,5 +1,3 @@
-// include ES6 Browser Polyfill
-import "babelify/polyfill";
+import $ from 'jquery';
 
-// import jQuery
-import "jquery";
+console.log('Hello World');
