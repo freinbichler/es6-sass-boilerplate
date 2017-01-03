@@ -6,3 +6,7 @@
 $mq-breakpoints: $grid-breakpoints;
 $mq-show-breakpoints: (xs, sm, md, lg, xl);
 @import '../../node_modules/sass-mq/mq';
+
+// components
+@import 'components/fonts';
+@import 'components/variable-overrides';

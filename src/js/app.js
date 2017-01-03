@@ -1,3 +1,3 @@
-import $ from 'jquery';
+import Navigation from './components/navigation';
 
-console.log('Hello World');
+const navigation = new Navigation();
