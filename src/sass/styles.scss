@@ -1,6 +1,20 @@
+// fonts
+@import 'components/fonts';
+
+// variables
+@import '../../node_modules/bootstrap/scss/variables';
+@import 'components/variable-overrides';
+
 // bootstrap
-@import '../../node_modules/bootstrap/scss/bootstrap-reboot.scss';
-@import '../../node_modules/bootstrap/scss/bootstrap-grid.scss';
+@import '../../node_modules/bootstrap/scss/mixins/hover';
+@import '../../node_modules/bootstrap/scss/mixins/tab-focus';
+@import '../../node_modules/bootstrap/scss/normalize';
+@import '../../node_modules/bootstrap/scss/reboot';
+@import '../../node_modules/bootstrap/scss/mixins/clearfix';
+@import '../../node_modules/bootstrap/scss/mixins/breakpoints';
+@import '../../node_modules/bootstrap/scss/mixins/grid-framework';
+@import '../../node_modules/bootstrap/scss/mixins/grid';
+@import '../../node_modules/bootstrap/scss/grid';
 
 // sass-mq
 $mq-breakpoints: $grid-breakpoints;
@@ -8,5 +22,4 @@ $mq-show-breakpoints: (xs, sm, md, lg, xl);
 @import '../../node_modules/sass-mq/mq';
 
 // components
-@import 'components/fonts';
-@import 'components/variable-overrides';
+// @import 'components/my-component';
