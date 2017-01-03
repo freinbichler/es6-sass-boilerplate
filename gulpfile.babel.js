@@ -27,7 +27,7 @@ gulp.task('styles', () => {
     .pipe($.sass({
       precision: 10
     }).on('error', $.sass.logError))
-    .pipe($.autoprefixer({ browsers: ['last 10 version'] }))
+    .pipe($.autoprefixer({ browsers: ['> 1%', 'last 2 versions'] }))
     .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles if production mode (via gulp styles --production)
     .pipe($.if('*.css' && argv.production, $.minifyCss()))
