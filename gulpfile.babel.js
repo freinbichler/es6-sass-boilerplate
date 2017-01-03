@@ -7,6 +7,8 @@ import browserify from 'browserify';
 import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
+import path from 'path';
+import del from 'del';
 
 const $ = gulploadplugins({
   lazy: true
@@ -52,18 +54,25 @@ gulp.task('scripts', () => {
     .pipe(gulp.dest('./public/js'));
 });
 
-gulp.task('html', () => {
-  return gulp.src('src/**/*.html').pipe(gulp.dest('public'));
+gulp.task('static', () => {
+  return gulp.src('src/**/*.{html,php,jpg,jpeg,png,gif,svg,ico}').pipe(gulp.dest('public'));
 });
 
 // Browser-Sync
-gulp.task('serve', ['styles'], () => {
+gulp.task('serve', ['styles', 'scripts', 'static'], () => {
   browserSync({
     notify: false,
     server: ['.tmp', 'public']
   });
 
-  gulp.watch(['src/**/*.html'], ['html', browserSync.reload]);
   gulp.watch(['src/sass/**/*.{scss,css}'], ['styles']);
   gulp.watch(['src/js/**/*.{js,es6}'], ['scripts', browserSync.reload]);
+  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,svg,ico}'], ['static', browserSync.reload]).on('change', (event) => {
+    if(event.type === 'deleted') {
+      let filePathFromSrc = path.relative(path.resolve('src'), event.path);
+      let destFilePath = path.resolve('public', filePathFromSrc);
+      console.log(`deleting ${destFilePath}...`);
+      del.sync(destFilePath);
+    }
+  });
 });
