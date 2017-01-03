@@ -2,8 +2,8 @@
 @import 'components/fonts';
 
 // variables
-@import '../../node_modules/bootstrap/scss/variables';
 @import 'components/variable-overrides';
+@import '../../node_modules/bootstrap/scss/variables';
 
 // bootstrap
 @import '../../node_modules/bootstrap/scss/mixins';
