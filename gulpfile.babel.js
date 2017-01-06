@@ -9,6 +9,8 @@ import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import path from 'path';
 import del from 'del';
+import handlebars from 'gulp-compile-handlebars';
+import rename from 'gulp-rename';
 
 const $ = gulploadplugins({
   lazy: true
@@ -58,8 +60,19 @@ gulp.task('static', () => {
   return gulp.src('src/**/*.{html,php,jpg,jpeg,png,gif,svg,ico}').pipe(gulp.dest('public'));
 });
 
+gulp.task('templates', () => {
+  return gulp.src('src/**/*.hbs')
+    .pipe(handlebars({}, {
+      batch: 'src/partials'
+    }))
+    .pipe(rename((path) => {
+      path.extname = '.html'
+    }))
+    .pipe(gulp.dest('public'));
+});
+
 // Browser-Sync
-gulp.task('serve', ['styles', 'scripts', 'static'], () => {
+gulp.task('serve', ['styles', 'scripts', 'templates', 'static'], () => {
   browserSync({
     notify: false,
     server: ['.tmp', 'public']
@@ -67,6 +80,7 @@ gulp.task('serve', ['styles', 'scripts', 'static'], () => {
 
   gulp.watch(['src/sass/**/*.{scss,css}'], ['styles']);
   gulp.watch(['src/js/**/*.{js,es6}'], ['scripts', browserSync.reload]);
+  gulp.watch(['src/**/*.hbs'], ['templates', browserSync.reload]);
   gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,svg,ico}'], ['static', browserSync.reload]).on('change', (event) => {
     if(event.type === 'deleted') {
       let filePathFromSrc = path.relative(path.resolve('src'), event.path);
