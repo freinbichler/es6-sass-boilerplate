@@ -61,7 +61,10 @@ gulp.task('static', () => {
 });
 
 gulp.task('templates', () => {
-  return gulp.src('src/**/*.hbs')
+  return gulp.src([
+    'src/**/*.hbs',
+    '!src/partials/*.hbs'
+  ])
     .pipe(handlebars({}, {
       batch: 'src/partials'
     }))
