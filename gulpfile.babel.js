@@ -10,7 +10,6 @@ import buffer from 'vinyl-buffer';
 import path from 'path';
 import del from 'del';
 import handlebars from 'gulp-compile-handlebars';
-import rename from 'gulp-rename';
 
 const $ = gulploadplugins({
   lazy: true
@@ -26,6 +25,9 @@ gulp.task('styles', () => {
   ])
     .pipe($.changed('.tmp/styles', {extension: '.css'}))
     .pipe($.if(!argv.production, $.sourcemaps.init()))
+    .pipe($.sassVariables({
+       $production: (argv.production == true)
+     }))
     .pipe($.sass({
       precision: 10
     }).on('error', $.sass.logError))
@@ -68,7 +70,7 @@ gulp.task('templates', () => {
     .pipe(handlebars({}, {
       batch: 'src/partials'
     }))
-    .pipe(rename((path) => {
+    .pipe($.rename((path) => {
       path.extname = '.html'
     }))
     .pipe(gulp.dest('public'));

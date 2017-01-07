@@ -15,6 +15,9 @@
 // sass-mq
 $mq-breakpoints: $grid-breakpoints;
 $mq-show-breakpoints: (xs, sm, md, lg, xl);
+@if($production == true) {
+  $mq-show-breakpoints: ();
+}
 @import '../../node_modules/sass-mq/mq';
 
 // components
