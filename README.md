@@ -14,8 +14,8 @@ After that execute `gulp serve`, point your browser to http://localhost:3000 and
 
 ## Gulp Tasks
 * `gulp serve` - starts Browsersync and serves your app for testing in different browsers (default: http://localhost:3000, Browsersync-UI at http://localhost:3001), after changes in SCSS, JS and HTML files in `src` the page is automatically refreshed
-* `gulp styles` - compiles your SASS files and copies the result CSS file to `public/css`
-* `gulp scripts` - transpiles your ES6 scriptfiles in `src/js`, creates a package with all imported files as `app.js` in `public/js`
+* `gulp build` - executes all tasks, but does not start a browsersync server
+
 
 Add `--production` to any gulp task to activate production mode. In production mode all code will be minified and no sourcemaps are written.
 

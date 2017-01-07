@@ -95,3 +95,5 @@ gulp.task('serve', ['styles', 'scripts', 'templates', 'static'], () => {
     }
   });
 });
+
+gulp.task('build', ['styles', 'scripts', 'templates', 'static']);
