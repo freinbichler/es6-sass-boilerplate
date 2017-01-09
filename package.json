@@ -36,7 +36,7 @@
     "gulp-sass": "^3.0.0",
     "gulp-sass-variables": "^1.1.1",
     "gulp-size": "^2.1.0",
-    "gulp-sourcemaps": "^1.5.2",
+    "gulp-sourcemaps": "^2.2.3",
     "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.6",
     "path": "^0.12.7",
