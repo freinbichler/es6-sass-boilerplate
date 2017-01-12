@@ -17,6 +17,12 @@ const $ = gulploadplugins({
 
 const argv = yargs.argv;
 
+function handleError(error) {
+  $.util.log(error.message);
+  $.util.log(error.codeFrame);
+  this.emit('end');
+}
+
 // SASS Styles
 gulp.task('styles', () => {
   return gulp.src([
@@ -49,11 +55,12 @@ gulp.task('scripts', () => {
   })
     .transform('babelify', {presets: ['es2015']})
     .bundle()
+      .on('error', handleError)
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe($.if(!argv.production, $.sourcemaps.init({loadMaps: true})))
     .pipe($.if(argv.production, $.uglify()))
-      .on('error', $.util.log)
+      .on('error', handleError)
     .pipe($.if(!argv.production, $.sourcemaps.write()))
     .pipe(gulp.dest('./public/js'));
 });
