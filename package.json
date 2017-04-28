@@ -6,6 +6,8 @@
   "author": "Marcel Freinbichler",
   "license": "MIT",
   "scripts": {
+    "start": "node_modules/gulp/bin/gulp.js serve",
+    "build": "node_modules/gulp/bin/gulp.js build --production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
