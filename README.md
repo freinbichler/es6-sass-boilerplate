@@ -19,7 +19,7 @@ After that execute `yarn start`, point your browser to http://localhost:3000 and
 
 Add `--production` to any gulp task to activate production mode. In production mode all code will be minified and no sourcemaps are written.
 
-## NPM scripts
+## Scripts
 * `yarn start` - alias for `gulp serve`
 * `yarn build` - alias for `gulp build --production`
 
