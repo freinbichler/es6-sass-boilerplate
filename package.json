@@ -39,7 +39,7 @@
     "gulp-sass-variables": "^1.1.1",
     "gulp-size": "^2.1.0",
     "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^2.0.0",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "path": "^0.12.7",
     "run-sequence": "^1.1.2",
