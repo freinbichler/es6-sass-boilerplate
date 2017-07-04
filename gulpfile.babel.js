@@ -91,9 +91,10 @@ gulp.task('serve', ['styles', 'scripts', 'templates', 'static'], () => {
   });
 
   gulp.watch(['src/sass/**/*.{scss,css}'], ['styles']);
-  gulp.watch(['src/js/**/*.{js,es6}'], ['scripts', browserSync.reload]);
-  gulp.watch(['src/**/*.hbs'], ['templates', browserSync.reload]);
-  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,svg,ico,eot,ttf,woff,woff2}'], ['static', browserSync.reload]).on('change', (event) => {
+  gulp.watch(['src/js/**/*.{js,es6}'], ['scripts']).on('change', browserSync.reload);
+  gulp.watch(['src/**/*.hbs'], ['templates']).on('change', browserSync.reload);
+  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,svg,ico,eot,ttf,woff,woff2}'], ['static']).on('change', (event) => {
+    browserSync.reload();
     if(event.type === 'deleted') {
       let filePathFromSrc = path.relative(path.resolve('src'), event.path);
       let destFilePath = path.resolve('public', filePathFromSrc);
