@@ -87,7 +87,8 @@ gulp.task('templates', () => {
 gulp.task('serve', ['styles', 'scripts', 'templates', 'static'], () => {
   browserSync({
     notify: false,
-    server: ['.tmp', 'public']
+    server: ['.tmp', 'public'],
+    reloadDelay: 100
   });
 
   gulp.watch(['src/sass/**/*.{scss,css}'], ['styles']);
