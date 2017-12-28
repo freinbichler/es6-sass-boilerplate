@@ -1,51 +1,50 @@
 {
   "name": "es6-sass-boilerplate",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "a boilerplate for web apps using ES6 and SASS",
   "main": "public/index.html",
   "author": "Marcel Freinbichler",
   "license": "MIT",
+  "repository": "https://github.com/freinbichler/es6-sass-boilerplate",
   "scripts": {
     "start": "node_modules/gulp/bin/gulp.js serve",
     "build": "node_modules/gulp/bin/gulp.js build --production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-alpha.6",
-    "jquery": "^3.1.1",
-    "sass-mq": "^3.2.3"
+    "bootstrap": "4.0.0-beta.2",
+    "jquery": "^3.2.1",
+    "popper.js": "^1.12.9",
+    "sass-mq": "^3.3.2"
   },
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-core": "^6.21.0",
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^7.3.0",
-    "browser-sync": "^2.18.5",
-    "browserify": "^13.1.1",
-    "browserify-shim": "^3.8.10",
-    "del": "^2.2.2",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babelify": "^8.0.0",
+    "browser-sync": "^2.22.0",
+    "browserify": "^14.5.0",
+    "browserify-shim": "^3.8.14",
+    "del": "^3.0.0",
     "gulp": "^3.9.1",
-    "gulp-autoprefixer": "^3.1.1",
-    "gulp-cache": "^0.4.5",
-    "gulp-changed": "^1.3.0",
+    "gulp-autoprefixer": "^4.0.0",
+    "gulp-changed": "^3.1.1",
+    "gulp-clean-css": "^3.9.0",
     "gulp-compile-handlebars": "^0.6.1",
-    "gulp-concat": "^2.6.0",
+    "gulp-concat": "^2.6.1",
     "gulp-if": "^2.0.2",
-    "gulp-load-plugins": "^1.4.0",
-    "gulp-minify-css": "^1.2.0",
-    "gulp-minify-html": "^1.0.4",
+    "gulp-load-plugins": "^1.5.0",
     "gulp-rename": "^1.2.2",
-    "gulp-sass": "^3.0.0",
+    "gulp-sass": "^3.1.0",
     "gulp-sass-variables": "^1.1.1",
     "gulp-size": "^2.1.0",
-    "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^2.0.0",
+    "gulp-sourcemaps": "^2.6.2",
+    "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "path": "^0.12.7",
-    "run-sequence": "^1.1.2",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0",
-    "yargs": "^6.6.0"
+    "vinyl-buffer": "^1.0.1",
+    "vinyl-source-stream": "^2.0.0",
+    "yargs": "^10.0.3"
   },
   "browserify": {
     "transform": [
@@ -53,5 +52,9 @@
     ]
   },
   "browser": {},
-  "browserify-shim": {}
+  "browserify-shim": {},
+  "browserslist": [
+    "last 2 versions",
+    ">1%"
+  ]
 }

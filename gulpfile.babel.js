@@ -1,6 +1,5 @@
 import gulp from 'gulp';
 import gulploadplugins from 'gulp-load-plugins';
-import runSequence from 'run-sequence';
 import yargs from 'yargs';
 import browserSync from 'browser-sync';
 import browserify from 'browserify';
@@ -37,14 +36,14 @@ gulp.task('styles', () => {
     .pipe($.sass({
       precision: 10
     }).on('error', $.sass.logError))
-    .pipe($.autoprefixer({ browsers: ['> 1%', 'last 2 versions'] }))
+    .pipe($.autoprefixer())
     .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles if production mode (via gulp styles --production)
-    .pipe($.if('*.css' && argv.production, $.minifyCss()))
+    .pipe($.if('*.css' && argv.production, $.cleanCss()))
     .pipe($.if(!argv.production, $.sourcemaps.write()))
     .pipe(gulp.dest('public/css'))
     .pipe(browserSync.stream())
-    .pipe($.size({title: 'styles'}));
+    .pipe($.size({title: 'styles.css'}));
 });
 
 // Scripts - app.js is the main entry point, you have to import all required files and modules
@@ -62,7 +61,8 @@ gulp.task('scripts', () => {
     .pipe($.if(argv.production, $.uglify()))
       .on('error', handleError)
     .pipe($.if(!argv.production, $.sourcemaps.write()))
-    .pipe(gulp.dest('./public/js'));
+    .pipe(gulp.dest('./public/js'))
+    .pipe($.size({title: 'app.js'}));
 });
 
 gulp.task('static', () => {
@@ -92,7 +92,7 @@ gulp.task('serve', ['styles', 'scripts', 'templates', 'static'], () => {
   });
 
   gulp.watch(['src/sass/**/*.{scss,css}'], ['styles']);
-  gulp.watch(['src/js/**/*.{js,es6}'], ['scripts']).on('change', browserSync.reload);
+  gulp.watch(['src/js/**/*.js'], ['scripts']).on('change', browserSync.reload);
   gulp.watch(['src/**/*.hbs'], ['templates']).on('change', browserSync.reload);
   gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp4,svg,ico,eot,ttf,woff,woff2,otf}'], ['static']).on('change', (event) => {
     browserSync.reload();
