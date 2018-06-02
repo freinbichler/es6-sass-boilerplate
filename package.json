@@ -15,7 +15,7 @@
     "bootstrap": "^4.1.1",
     "jquery": "^3.3.1",
     "popper.js": "^1.14.3",
-    "sass-mq": "^4.0.2"
+    "sass-mq": "^5.0.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
