@@ -1,3 +1,5 @@
+import '@babel/register';
+
 import gulp from 'gulp';
 import gulploadplugins from 'gulp-load-plugins';
 import yargs from 'yargs';
@@ -25,9 +27,10 @@ function handleError(error) {
   }
   const fileName = error.filename || error.file;
   notifier.notify({
-    title: `Error: ${fileName.split('/').pop()}`,
+    title: `Error: ${fileName ? fileName.split('/').pop() : ''}`,
     message: error.message.split(':').slice(1)
   });
+  process.exitCode = 1;
   this.emit('end');
 }
 
@@ -37,8 +40,7 @@ gulp.task('styles', () => {
     'src/vendor/**/*.css',
     'src/sass/*.scss'
   ])
-    .pipe($.changed('.tmp/styles', {extension: '.css'}))
-    .pipe($.if(!argv.production, $.sourcemaps.init()))
+    .pipe($.changed('.tmp/styles', { extension: '.css' }))
     .pipe($.sassVariables({
        $production: (argv.production == true)
      }))
@@ -49,7 +51,6 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('.tmp'))
     // Concatenate and minify styles if production mode (via gulp styles --production)
     .pipe($.if('*.css' && argv.production, $.cleanCss()))
-    .pipe($.if(!argv.production, $.sourcemaps.write()))
     .pipe(gulp.dest('public/css'))
     .pipe(browserSync.stream())
     .pipe($.size({title: 'styles.css'}));
@@ -61,15 +62,13 @@ gulp.task('scripts', () => {
     entries: 'src/js/app.js',
     debug: true
   })
-    .transform('babelify', {presets: ['es2015']})
+    .transform('babelify', { presets: ['@babel/preset-env'] })
     .bundle()
       .on('error', handleError)
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe($.if(!argv.production, $.sourcemaps.init({loadMaps: true})))
     .pipe($.if(argv.production, $.uglify()))
       .on('error', handleError)
-    .pipe($.if(!argv.production, $.sourcemaps.write()))
     .pipe(gulp.dest('./public/js'))
     .pipe($.size({title: 'app.js'}));
 });

@@ -1,16 +1,26 @@
+// bootstrap grid
 $grid-breakpoints: (
-  xs: 0px,
+  xxs: 0px,
+  xs: 321px,
   sm: 576px,
   md: 768px,
   lg: 992px,
-  xl: 1200px
+  xl: 1200px,
+  xxl: 1456px
 );
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1400px
+);
+
 
 // sass-mq
 $mq-breakpoints: $grid-breakpoints;
-$mq-show-breakpoints: (xs, sm, md, lg, xl);
+$mq-show-breakpoints: (xxs, xs, sm, md, lg, xl, xxl);
 @if($production == true) {
   $mq-show-breakpoints: ();
 }
-
-// override bootstrap variables here
