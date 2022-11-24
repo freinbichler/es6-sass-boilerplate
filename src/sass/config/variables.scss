@@ -1,6 +1,6 @@
 // bootstrap grid
 $grid-breakpoints: (
-  xxs: 0px,
+  xxs: 0,
   xs: 321px,
   sm: 576px,
   md: 768px,
@@ -19,7 +19,16 @@ $container-max-widths: (
 
 
 // sass-mq
-$mq-breakpoints: $grid-breakpoints;
+@use 'sass:map';
+$mq-breakpoints: (
+  xxs: 0px, // mq requires 'px'
+  xs: map.get($grid-breakpoints, 'xs'),
+  sm: map.get($grid-breakpoints, 'sm'),
+  md: map.get($grid-breakpoints, 'md'),
+  lg: map.get($grid-breakpoints, 'lg'),
+  xl: map.get($grid-breakpoints, 'xl'),
+  xxl: map.get($grid-breakpoints, 'xxl'),
+);
 $mq-show-breakpoints: (xxs, xs, sm, md, lg, xl, xxl);
 @if($production == true) {
   $mq-show-breakpoints: ();

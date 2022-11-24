@@ -80,7 +80,7 @@ gulp.task('scripts-reloader', gulp.series('scripts', (done) => {
 }));
 
 gulp.task('static', () => {
-  return gulp.src('src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp4,svg,ico,eot,ttf,woff,woff2,otf}').pipe(gulp.dest('public'));
+  return gulp.src('src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp3,mp4,svg,ico,eot,ttf,woff,woff2,otf,json}').pipe(gulp.dest('public'));
 });
 
 gulp.task('templates', () => {
@@ -107,7 +107,7 @@ gulp.task('serve', gulp.series('styles', 'scripts', 'templates', 'static', () =>
   gulp.watch(['src/sass/**/*.{scss,css}'], gulp.series('styles'));
   gulp.watch(['src/js/**/*.js'], gulp.series('scripts-reloader'));
   gulp.watch(['src/**/*.hbs'], gulp.series('templates')).on('all', browserSync.reload);
-  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp4,svg,ico,eot,ttf,woff,woff2,otf}'], gulp.series('static'))
+  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp3,mp4,svg,ico,eot,ttf,woff,woff2,otf,json}'], gulp.series('static'))
     .on('all', () => {
       browserSync.reload();
     })
