@@ -1,24 +1,17 @@
-// import '@babel/register';
-
-import gulp from 'gulp';
-import gulploadplugins from 'gulp-load-plugins';
-import yargs from 'yargs';
-import browserSync from 'browser-sync';
-import browserify from 'browserify';
-import babelify from 'babelify';
-import source from 'vinyl-source-stream';
-import buffer from 'vinyl-buffer';
-import path from 'path';
-// import { deleteSync } from 'del';
-import rimraf from 'rimraf';
-import handlebars from 'gulp-compile-handlebars';
-import notifier from 'node-notifier';
-import dartSass from 'sass';
-import gulpSass from 'gulp-sass';
-import log from 'fancy-log';
-import c from 'ansi-colors';
-
-const sass = gulpSass(dartSass);
+const gulp = require('gulp');
+const gulploadplugins = require('gulp-load-plugins');
+const yargs = require('yargs');
+const browserSync = require('browser-sync');
+const browserify = require('browserify');
+const source = require('vinyl-source-stream');
+const buffer = require('vinyl-buffer');
+const path = require('path');
+const rimraf = require('rimraf');
+const handlebars = require('gulp-compile-handlebars');
+const notifier = require('node-notifier');
+const sass = require('gulp-sass')(require('sass'));
+const log = require('fancy-log');
+const c = require('ansi-colors');
 
 const $ = gulploadplugins({
   lazy: true
