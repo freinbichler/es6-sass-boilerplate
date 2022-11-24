@@ -1,4 +1,4 @@
-import '@babel/register';
+// import '@babel/register';
 
 import gulp from 'gulp';
 import gulploadplugins from 'gulp-load-plugins';
@@ -9,9 +9,16 @@ import babelify from 'babelify';
 import source from 'vinyl-source-stream';
 import buffer from 'vinyl-buffer';
 import path from 'path';
-import del from 'del';
+// import { deleteSync } from 'del';
+import rimraf from 'rimraf';
 import handlebars from 'gulp-compile-handlebars';
 import notifier from 'node-notifier';
+import dartSass from 'sass';
+import gulpSass from 'gulp-sass';
+import log from 'fancy-log';
+import c from 'ansi-colors';
+
+const sass = gulpSass(dartSass);
 
 const $ = gulploadplugins({
   lazy: true
@@ -20,10 +27,10 @@ const $ = gulploadplugins({
 const argv = yargs.argv;
 
 function handleError(error) {
-  $.util.log('⚠️ ⚠️ ⚠️');
-  $.util.log($.util.colors.magenta(error.message));
+  log('⚠️ ⚠️ ⚠️');
+  log(c.red(error.message));
   if(error.codeFrame) {
-    $.util.log(error.codeFrame);
+    log(error.codeFrame);
   }
   const fileName = error.filename || error.file;
   notifier.notify({
@@ -44,7 +51,7 @@ gulp.task('styles', () => {
     .pipe($.sassVariables({
        $production: (argv.production == true)
      }))
-    .pipe($.sass({
+    .pipe(sass({
       precision: 10
     }).on('error', handleError))
     .pipe($.autoprefixer())
@@ -74,10 +81,10 @@ gulp.task('scripts', () => {
 });
 
 // a task that ensures the `scripts` task is complete before reloading browsers
-gulp.task('scripts-reloader', ['scripts'], (done) => {
+gulp.task('scripts-reloader', gulp.series('scripts', (done) => {
   browserSync.reload();
   done();
-});
+}));
 
 gulp.task('static', () => {
   return gulp.src('src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp4,svg,ico,eot,ttf,woff,woff2,otf}').pipe(gulp.dest('public'));
@@ -98,24 +105,25 @@ gulp.task('templates', () => {
 });
 
 // Browser-Sync
-gulp.task('serve', ['styles', 'scripts', 'templates', 'static'], () => {
+gulp.task('serve', gulp.series('styles', 'scripts', 'templates', 'static', () => {
   browserSync({
     notify: false,
     server: ['.tmp', 'public']
   });
 
-  gulp.watch(['src/sass/**/*.{scss,css}'], ['styles']);
-  gulp.watch(['src/js/**/*.js'], ['scripts-reloader']);
-  gulp.watch(['src/**/*.hbs'], ['templates']).on('change', browserSync.reload);
-  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp4,svg,ico,eot,ttf,woff,woff2,otf}'], ['static']).on('change', (event) => {
-    browserSync.reload();
-    if(event.type === 'deleted') {
-      let filePathFromSrc = path.relative(path.resolve('src'), event.path);
-      let destFilePath = path.resolve('public', filePathFromSrc);
-      console.log(`deleting ${destFilePath}...`);
-      del.sync(destFilePath);
-    }
-  });
-});
+  gulp.watch(['src/sass/**/*.{scss,css}'], gulp.series('styles'));
+  gulp.watch(['src/js/**/*.js'], gulp.series('scripts-reloader'));
+  gulp.watch(['src/**/*.hbs'], gulp.series('templates')).on('all', browserSync.reload);
+  gulp.watch(['src/**/*.{html,php,jpg,jpeg,png,gif,webp,mp4,svg,ico,eot,ttf,woff,woff2,otf}'], gulp.series('static'))
+    .on('all', () => {
+      browserSync.reload();
+    })
+    .on('unlink', (filePath) => {
+      let srcFilePath = path.relative(path.resolve('src'), filePath);
+      let publicFilePath = path.resolve('public', srcFilePath);
+      log(c.red(`🗑️  deleting ${publicFilePath}...`));
+      rimraf.sync(publicFilePath);
+    });
+}));
 
-gulp.task('build', ['styles', 'scripts', 'templates', 'static']);
+gulp.task('build', gulp.series('styles', 'scripts', 'templates', 'static'));
