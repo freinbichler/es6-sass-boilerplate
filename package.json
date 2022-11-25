@@ -7,8 +7,8 @@
   "license": "MIT",
   "repository": "https://github.com/freinbichler/es6-sass-boilerplate",
   "scripts": {
-    "start": "node_modules/gulp/bin/gulp.js serve",
-    "build": "node_modules/gulp/bin/gulp.js build --production",
+    "start": "gulp serve",
+    "build": "gulp build --production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
