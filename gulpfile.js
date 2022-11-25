@@ -119,4 +119,4 @@ gulp.task('serve', gulp.series('styles', 'scripts', 'templates', 'static', () =>
     });
 }));
 
-gulp.task('build', gulp.series('styles', 'scripts', 'templates', 'static'));
+gulp.task('build', gulp.parallel('styles', 'scripts', 'templates', 'static'));
