@@ -26,9 +26,10 @@ function handleError(error) {
     log(error.codeFrame);
   }
   const fileName = error.filename || error.file;
+  const errorMessageParts = error.message.split(': ');
   notifier.notify({
     title: `Error: ${fileName ? fileName.split('/').pop() : ''}`,
-    message: error.message.split(':').slice(1)
+    message: errorMessageParts.length > 1 ? errorMessageParts[1] : 'Error',
   });
   process.exitCode = 1;
   this.emit('end');
